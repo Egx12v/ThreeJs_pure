@@ -1,78 +1,136 @@
 import { useEffect } from "react"
+import Background from "../components/Background"
 
-import {  
-    Scene, 
-    WebGL1Renderer,     //! Ver si es necesario usaar otra camara
-    PerspectiveCamera,  //! De momento usamos este tipo de camara
 
-    //! Esto para test solo cargamos la malla, el tipo de material y la figura
-    Mesh,
-    MeshBasicMaterial,
-    BoxGeometry,
+//!  experimental obj classes to readme
 
-} from "three"
+//* Clase principal
 
-/* 
-* Scene 
-* Camera
-* Rederer
- */
+class humano {
+
+    private nombre:String    //!Esto puede ser accesible desde otro lado
+    private altura:Number   //! Esto solo puede ser accedido desde la misma clase (Intern-mee)
+    private peso:Number     //! Privado para aquí mismo...
+
+    constructor(nombre:String, altura:Number, peso:Number){
+        this.nombre=nombre;
+        this.altura=altura;
+        this.peso=peso;
+        this.saludar( nombre);     //! Esto se auto ejecuta por el construcctor
+    }
+
+    private saldor() {
+        console.log("private accese(): => not permissions;")
+    }
+
+    public saludar (name:String){
+        console.log("Fn saludar()...", /* name */this.nombre) //!Podemos tener su nombre desde el this o desde params
+    }
+
+
+
+}
+
+//* class extends => 
+class peleador extends humano {
+
+    /* public nombre: String;
+    public peso:Number;
+    public altura:Number; */
+
+    private poder   =   100
+    private defensa =   100
+
+
+    constructor(nombre:String,/* peso:Number,altura:Number */){ // podemos haecer que tome valores por defecto o no
+        //* Super le pasa los params a la clase de donde extiende (humano)
+        super(nombre,1.8, 49)
+        console.log(this.nombre)
+    }
+
+    /**
+     * dup_stadistics => Metodo para poder duplicar valores de los datos
+     */
+    public dup_stadistics() {
+        this.poder*=2;
+        this.defensa*=2;
+        console.log(this.defensa," -- ",this.poder);
+    }
+
+    private dubStadistics() {
+        this.poder +=2;
+        this.defesa *=2;
+        console.log(this.poder);
+        console.log(this.defensa);
+
+    }
+
+    /**
+     * executeFn
+     */
+    public executeFn(fn) {
+        fn();
+    }
+}
+
+
+class Scene {
+
+    private score = 0; //! Se infiere que el tipo de dato es de number 
+
+    constructor() {
+    console.log("Creando escena...")
+      const  P1 = new peleador("juan");
+      const hp = new humano("adrian",1.8,120)
+      console.log("this this",this)
+      P1.executeFn(this.aumentScore.bind(this)); // al pasar una función se pasas sin ();
+      //TODO: I M P O R T A N T
+      //* para poder pasar una función a otr objeto inicado dentro de this
+      //* Usamos esta palabra .bind(this)
+      //* permite a una clase u obj prestar "algo()" a alquien más (clase o objeto)
+      
+    }
+
+    private aumentScore() {
+        this.score+=10;
+        console.log("Updating score:", this )
+
+    }
+
+}
+
+
+
+//! Expermiental obj end
+
+
+
 
 function HomePage(params) {
 
-   useEffect(() => {
-    const scene = new Scene();
-    const render = new WebGL1Renderer({
-        antialias:true,                       //? Evita el pixelado
-        canvas:document.getElementById("myc") //? Optenenos el canvas por su id en el dom (se recomienda así para no crear duplicidada de canvas)
+ /*   useEffect(() => {
+   
 
-    });
-    const camera = new PerspectiveCamera(
-        50,                                     //? Field on view
-        window.innerWidth / window.innerHeight, //? Aspect ratio dinamico por cada tipo de pantalla
-        0.1,                                    //? que tan cerca y 
-        10000                                   //? que tan lejos que ve, si ve poco se cortan partes es decir solo lo que cabe a esa distancia
-    );
+}, []) */
 
-    camera.position.z = 6;
+   const humando = new humano("Pedro",2,55);        //!clase principal
+   const peleador1 = new peleador("Lenin");   //!Extension
+/* 
+   console.log("Peleador:", peleador1.nombre)
+   peleador1.dup_stadistics(); */
 
-    /* //! DEV MODE */
+   new Scene();
 
-    //* Creammos la geometría
-    const geometria = new BoxGeometry(1,1,1);   //? alto ancho y profundidad
-    const material = new MeshBasicMaterial({    //? Tipo de material que no necesita luz
-          color : "red"                         //? deinidmos el color
-        }
-    )
-    const cubo = new Mesh(geometria,material);
-    scene.add(cubo)                             //? Agregamos el cubo a la scene
+   /* humando.saldor();
+   humando.saldor();
+   humando.saldor(); */
 
 
-    /* //! DEV MODE */
-
-    //*TODO Esto debe ser dinamico y tomar el tamño del widget
-    render.setSize( 
-        window.innerWidth,                      //? Le decimos al render que tome el tamño del window
-        window.innerHeight                      //? altura de la pantalla
-    )                            
-
-    function animation() {
-        cubo.rotation.x += 0.05;
-        cubo.rotation.y += 0.005;
-
-        render.render(scene,camera);
-        requestAnimationFrame(animation);
-    }
-
-    animation();
-
-}, [])
-    
-    return (
+    return /* null */ (
     <div>
 
         Welcome to Next.js
-         <canvas id="myc"></canvas>
+         <Background />
     </div>
     )
 }
