@@ -1,0 +1,14 @@
+container{
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll; /* Si el contenido del secction se desvorda en y usa scroll para contenerlo  */
+    z-index: 100; /* Para que esté sobre el canvas */
+
+}
+section{
+    height: 100vh;
+    width: auto;
+    overflow: hidden;/* Evitamos que si hay desvordamiento se cree scroll vertical */
+
+
+}

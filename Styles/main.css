@@ -9,4 +9,5 @@ canvas{
     left: 0;
     top: 0;
     width: auto;
+    z-index: -1;/* CANVAS INDEX POR DEBAJO */
 }

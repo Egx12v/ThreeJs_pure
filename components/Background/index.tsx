@@ -46,16 +46,15 @@ export default class Background extends Component<BackgroundProps> {
       };
     //! End exp
     
-    
-    
-    componentDidMount(): void {
+    /*   componentDidMount(): void {
         new Renderer()
-    }
+    } */
+    componentDidMount =()=>{return new Renderer();} //! Podemos migrara el did to arrow
 
     //* En un componente de clase para retornar cosas se hace de la siguiente manera
-    render(): ReactNode {
+    /*  render(): ReactNode {
         return  <canvas id="myc"/>
-    }
-
-
+    } */
+    render =()=> <canvas id="myc"/>
+    
 }

@@ -2,9 +2,9 @@ import React from 'react';
 
 const Section = () => {
   return (
-    <div>
+    <section style={{color:'white'}}>
       Section
-    </div>
+    </section>
   );
 }
 

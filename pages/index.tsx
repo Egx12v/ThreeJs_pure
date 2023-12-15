@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import Background from "../components/Background"
+import Section from "../components/Section"
 
 
 //!  experimental obj classes to readme
@@ -129,7 +130,12 @@ function HomePage(params) {
     return /* null */ (
     <div>
 
-        Welcome to Next.js
+        {/* Welcome to Next.js */}
+        <div className="container">
+            <Section/>
+            <Section/>
+            <Section/>
+        </div>
          <Background />
     </div>
     )
